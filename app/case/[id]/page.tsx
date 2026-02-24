@@ -5,6 +5,37 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
 
+type CaseLocation = {
+  city?: string;
+  state?: string;
+  latitude?: number;
+  longitude?: number;
+  capturedAt?: string;
+};
+
+type CaseData = {
+  caseId: string;
+  createdAt: string;
+  status: string;
+
+  name: string;
+  phone: string;
+  email?: string;
+  state: string;
+  district?: string;
+  aadhaarLast4: string;
+
+  crimeType: string;
+  incidentDate: string;
+  incidentTime?: string;
+  lossAmount?: number;
+  evidenceFiles?: string[];
+  description: string;
+  suspectInfo?: string;
+
+  location?: CaseLocation;
+};
+
 const STATUS_INFO: Record<string, {icon:string, cls:string}> = {
   'Registered':    { icon:'📋', cls:'badge-registered' },
   'Under Review':  { icon:'🔎', cls:'badge-review' },
@@ -16,7 +47,7 @@ const STATUS_INFO: Record<string, {icon:string, cls:string}> = {
 export default function CaseDetail() {
   const params = useParams();
   const caseId = (params?.id as string)?.toUpperCase();
-  const [caseData, setCaseData] = useState<Record<string,unknown> | null>(null);
+  const [caseData, setCaseData] = useState<CaseData | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
